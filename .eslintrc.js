@@ -35,11 +35,11 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-param-reassign': 'off',
     'no-console': ['error', { allow: ['tron'] }],
-    settings: {
-      "import/resolver": {
-        "babel-plugin-root-import": {
-          rootPathSuffix: "src"
-        }
+  },
+  settings: {
+    'import/resolver': {
+      'babel-plugin-root-import': {
+        rootPathSuffix: 'src'
       }
     }
   }
