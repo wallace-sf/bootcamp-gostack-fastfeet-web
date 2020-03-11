@@ -1,7 +1,5 @@
-import React from 'react';
+import styled from 'styled-components';
 
-// import { Container } from './styles';
+export const Container = styled.header``;
 
-export default function Header() {
-  return <h1>Header</h1>;
-}
+export const Content = styled.div``;
