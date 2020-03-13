@@ -8,8 +8,9 @@ export const Container = styled.header`
 export const Content = styled.div`
   margin: 0 auto;
   height: 64px;
-  max-width: 1100px;
+  max-width: 1200px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 
   nav {
@@ -38,5 +39,23 @@ export const Content = styled.div`
     a:last-of-type {
       margin: 0;
     }
+  }
+`;
+
+export const UserPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  strong {
+    margin-bottom: 3px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  button {
+    font-size: 14px;
+    border: none;
+    background: none;
+    color: #de3b3b;
   }
 `;

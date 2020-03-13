@@ -1,7 +1,8 @@
 import React from 'react';
 
+import TableUsers from '~/components/TableUsers';
 // import { Container } from './styles';
 
 export default function Deliveries() {
-  return <h1>Deliveries</h1>;
+  return <TableUsers />;
 }

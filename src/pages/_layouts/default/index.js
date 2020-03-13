@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Header from '~/components/Header';
-import { Wrapper } from './styles';
+import { Wrapper, Content, PageTitle } from './styles';
 
 export default function DefaultLayout({ children }) {
   return (
     <Wrapper>
       <Header />
-      {children}
+      <Content>
+        <PageTitle>Gerenciando encomendas</PageTitle>
+        {children}
+      </Content>
     </Wrapper>
   );
 }
