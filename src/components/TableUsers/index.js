@@ -30,26 +30,11 @@ export default function TableUsers() {
             <td>example@email.com</td>
             <td>Rio do Sul</td>
             <td>
-              <strong>Pendente</strong>
+              <div>
+                <span />
+                <strong>Pendente</strong>
+              </div>
             </td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <td>#02</td>
-            <td>ML</td>
-            <td>Martin Lawrence</td>
-            <td>martin@email.com</td>
-            <td>São Paulo</td>
-            <td>Conclúido</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <td>#03</td>
-            <td>JK</td>
-            <td>John F. Kennedy</td>
-            <td>johnfk@email.com</td>
-            <td>Rio de Janeiro</td>
-            <td>Pendente</td>
             <td>...</td>
           </tr>
         </tbody>

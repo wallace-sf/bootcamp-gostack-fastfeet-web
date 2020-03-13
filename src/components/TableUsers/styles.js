@@ -30,22 +30,27 @@ export const UserTable = styled.table`
       margin-left: 5px;
     }
 
-    strong {
+    div {
+      display: inline-block;
+      align-items: center;
       text-transform: uppercase;
       background: #dff0df;
       color: #2ca42b;
       padding: 5px 7px;
       border-radius: 12px;
 
-      &::before {
+      span {
         content: '';
         margin-right: 6px;
         display: inline-block;
         width: 10px;
         height: 10px;
-        vertical-align: middle;
         border-radius: 50%;
         background: #2ca42b;
+      }
+
+      strong {
+        vertical-align: middle;
       }
     }
   }
