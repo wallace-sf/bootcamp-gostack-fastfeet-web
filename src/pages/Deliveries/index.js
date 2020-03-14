@@ -7,9 +7,17 @@ import TableUsers from '~/components/TableUsers';
 export default function Deliveries() {
   const [deliveries, setDeliveries] = useState([]);
 
+  const entity = {
+    typeEntity: 'delivery',
+    EntityHeadersTable: ['ID', 'Destinatário', 'Cidade', 'Estado', 'Status'],
+    data: deliveries,
+  };
+
   useEffect(() => {
     async function loadDeliveries() {
       const response = await api.get('delivery');
+
+      console.tron.log(response.data);
 
       setDeliveries(response.data);
     }
@@ -17,5 +25,5 @@ export default function Deliveries() {
     loadDeliveries();
   }, []);
 
-  return <TableUsers data={deliveries} />;
+  return <TableUsers entity={entity} />;
 }
