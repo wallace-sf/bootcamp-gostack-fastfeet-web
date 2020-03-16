@@ -15,13 +15,15 @@ export default function TableUsers({ entity }) {
     switch (typeEntity) {
       case 'delivery':
         setDataTable({
-          tableHeaders: EntityHeadersTable, tableDatas: {
-            id: data.id,
-            name: data.recipient.name,
-            deliveryman: data.deliveryman.name,
-            city: data.recipient.city,
-            state: data.recipient.state,
-          }
+          tableHeaders: EntityHeadersTable,
+          tableDatas: data.map(delivery => [
+            delivery.id,
+            delivery.recipient.name,
+            delivery.deliveryman.name,
+            delivery.recipient.city,
+            delivery.recipient.state,
+            'Pendente',
+          ]),
         });
         break;
       default:
@@ -41,8 +43,10 @@ export default function TableUsers({ entity }) {
         </thead>
         <tbody>
           {dataTable.tableDatas.map(data => (
-            <tr key={}>
-              <td />
+            <tr key={data}>
+              {data.map(field => (
+                <td key={field}>{field}</td>
+              ))}
             </tr>
           ))}
           {/* <tr>
