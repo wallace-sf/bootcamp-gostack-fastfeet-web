@@ -19,10 +19,21 @@ export default function TableUsers({ entity }) {
           tableDatas: data.map(delivery => [
             delivery.id,
             delivery.recipient.name,
-            delivery.deliveryman.name,
+            delivery.deliveryman.avatar ? (
+              <img
+                src={`https://ui-avatars.com/api/?name=$${delivery.deliveryman.name}`}
+                alt=""
+              />
+            ) : (
+                delivery.deliveryman.name
+              ),
             delivery.recipient.city,
             delivery.recipient.state,
-            'Pendente',
+            <div>
+              <span />
+              <strong>Pendente</strong>
+            </div>,
+            '...',
           ]),
         });
         break;

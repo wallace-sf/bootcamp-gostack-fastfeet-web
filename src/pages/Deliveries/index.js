@@ -9,7 +9,14 @@ export default function Deliveries() {
 
   const entity = {
     typeEntity: 'delivery',
-    EntityHeadersTable: ['ID', 'Destinatário', 'Cidade', 'Estado', 'Status'],
+    EntityHeadersTable: [
+      'ID',
+      'Destinatário',
+      'Entregador',
+      'Cidade',
+      'Estado',
+      'Status',
+    ],
     data: deliveries,
   };
 

@@ -14,6 +14,10 @@ export const UserTable = styled.table`
     text-align: left;
   }
 
+  thead tr > th:first-of-type {
+    padding-left: 25px;
+  }
+
   tbody td {
     height: 57px;
     padding: 12px;
@@ -26,9 +30,9 @@ export const UserTable = styled.table`
       vertical-align: middle;
     }
 
-    span {
+    /* span {
       margin-left: 5px;
-    }
+    } */
 
     div {
       display: inline-block;
@@ -57,7 +61,7 @@ export const UserTable = styled.table`
 
   tbody tr > td:first-of-type {
     border-radius: 4px 0 0 4px;
-    padding-left: 22px;
+    padding-left: 25px;
   }
 
   tbody tr > td:last-of-type {
