@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { Container, UserTable } from './styles';
+import AvatarTable from './AvatarTable';
+import ControlActions from '~/components/ControlActions';
+import { Container, UserTable, Status } from './styles';
 
 export default function TableUsers({ entity }) {
   const [dataTable, setDataTable] = useState({
@@ -19,23 +21,13 @@ export default function TableUsers({ entity }) {
           tableDatas: data.map(delivery => [
             delivery.id,
             delivery.recipient.name,
-            <>
-              <img
-                src={
-                  delivery.deliveryman.avatar.url ||
-                  `https://ui-avatars.com/api/?name=$${delivery.deliveryman.name}`
-                }
-                alt=""
-              />
-              <span>{delivery.deliveryman.name}</span>
-            </>,
+            <AvatarTable deliveryman={delivery.deliveryman} />,
             delivery.recipient.city,
             delivery.recipient.state,
-            <div>
+            <Status>
               <span />
               <strong>Pendente</strong>
-            </div>,
-            '...',
+            </Status>,
           ]),
         });
         break;
@@ -60,28 +52,12 @@ export default function TableUsers({ entity }) {
               {data.map(field => (
                 <td key={field}>{field}</td>
               ))}
+
+              <td>
+                <ControlActions />
+              </td>
             </tr>
           ))}
-          {/* */}
-          {/* <tr>
-            <td>#01</td>
-            <td>
-              <span>Ludwig Van Beethoven</span>
-            </td>
-            <td>
-              <img src="https://ui-avatars.com/api/?name=John+Doe" alt="" />
-              <span>John Doe</span>
-            </td>
-            <td>Rio do Sul</td>
-            <td>Santa Catarina</td>
-            <td>
-              <div>
-                <span />
-                <strong>Pendente</strong>
-              </div>
-            </td>
-            <td>...</td>
-          </tr> */}
         </tbody>
       </UserTable>
     </Container>

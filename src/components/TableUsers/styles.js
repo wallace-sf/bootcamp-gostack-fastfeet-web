@@ -24,47 +24,37 @@ export const UserTable = styled.table`
     background: #fff;
     color: #666;
 
-    img {
-      height: 35px;
-      border-radius: 50%;
-      vertical-align: middle;
+    tbody tr > td:first-of-type {
+      border-radius: 4px 0 0 4px;
+      padding-left: 25px;
     }
 
-    /* span {
-      margin-left: 5px;
-    } */
-
-    div {
-      display: inline-block;
-      align-items: center;
-      text-transform: uppercase;
-      background: #dff0df;
-      color: #2ca42b;
-      padding: 5px 7px;
-      border-radius: 12px;
-
-      span {
-        content: '';
-        margin-right: 6px;
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: #2ca42b;
-      }
-
-      strong {
-        vertical-align: middle;
-      }
+    tbody tr > td:last-of-type {
+      border-radius: 0 4px 4px 0px;
     }
   }
+`;
 
-  tbody tr > td:first-of-type {
-    border-radius: 4px 0 0 4px;
-    padding-left: 25px;
+export const Status = styled.div`
+  display: inline-block;
+  align-items: center;
+  text-transform: uppercase;
+  background: #dff0df;
+  color: #2ca42b;
+  padding: 5px 7px;
+  border-radius: 12px;
+
+  span {
+    content: '';
+    margin-right: 6px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2ca42b;
   }
 
-  tbody tr > td:last-of-type {
-    border-radius: 0 4px 4px 0px;
+  strong {
+    vertical-align: middle;
   }
 `;
