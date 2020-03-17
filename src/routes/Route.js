@@ -9,6 +9,7 @@ import DefaultLayout from '~/pages/_layouts/default';
 export default function RouteWrapper({
   component: Component,
   isPrivate,
+  pageTitle,
   ...rest
 }) {
   const { signed } = store.getState().auth;
@@ -27,7 +28,7 @@ export default function RouteWrapper({
     <Route
       {...rest}
       render={props => (
-        <Layout>
+        <Layout pageTitle={pageTitle}>
           <Component {...props} />
         </Layout>
       )}
@@ -39,8 +40,10 @@ RouteWrapper.propTypes = {
   component: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
     .isRequired,
   isPrivate: PropTypes.bool,
+  pageTitle: PropTypes.string,
 };
 
 RouteWrapper.defaultProps = {
   isPrivate: false,
+  pageTitle: '',
 };

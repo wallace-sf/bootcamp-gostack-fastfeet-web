@@ -15,6 +15,7 @@ export const ActionMenu = styled.div`
   left: 50%;
   top: 100%;
   transform: translateX(-50%);
+  min-width: 150px;
   display: ${props => (props.visible ? 'block' : 'none')};
   padding: 18px 10px 16px 10px;
   background: #fff;

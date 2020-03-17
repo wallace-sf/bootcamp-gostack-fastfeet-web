@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import Header from '~/components/Header';
 import { Wrapper, Content, PageTitle } from './styles';
 
-export default function DefaultLayout({ children }) {
+export default function DefaultLayout({ children, pageTitle }) {
   return (
     <Wrapper>
       <Header />
       <Content>
-        <PageTitle>Gerenciando encomendas</PageTitle>
+        <PageTitle>{pageTitle}</PageTitle>
         {children}
       </Content>
     </Wrapper>

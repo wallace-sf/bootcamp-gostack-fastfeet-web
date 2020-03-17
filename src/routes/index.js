@@ -13,10 +13,30 @@ export default function Routes() {
   return (
     <Switch>
       <Route path="/" exact component={SignIn} />
-      <Route path="/deliveries" component={Deliveries} isPrivate />
-      <Route path="/deliverymen" component={Deliverymen} isPrivate />
-      <Route path="/recipients" component={Recipients} isPrivate />
-      <Route path="/problems" component={Problems} isPrivate />
+      <Route
+        path="/deliveries"
+        component={Deliveries}
+        isPrivate
+        pageTitle="Gerenciando encomendas"
+      />
+      <Route
+        path="/deliverymen"
+        component={Deliverymen}
+        isPrivate
+        pageTitle="Gerenciando entregadores"
+      />
+      <Route
+        path="/recipients"
+        component={Recipients}
+        isPrivate
+        pageTitle="Gerenciando destinatários"
+      />
+      <Route
+        path="/problems"
+        component={Problems}
+        isPrivate
+        pageTitle="Problemas na entrega"
+      />
     </Switch>
   );
 }
