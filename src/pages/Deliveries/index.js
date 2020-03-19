@@ -24,8 +24,6 @@ export default function Deliveries() {
     async function loadDeliveries() {
       const response = await api.get('delivery');
 
-      console.tron.log(response.data);
-
       setDeliveries(response.data);
     }
 

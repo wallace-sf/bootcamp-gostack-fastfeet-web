@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+import api from '~/services/api';
+import TableUsers from '~/components/TableUsers';
 
 // import { Container } from './styles';
 
 export default function Deliverymen() {
-  return <h1>Delivery men</h1>;
+  const [deliverymen, setDeliverymen] = useState([]);
+
+  const entity = {
+    typeEntity: 'deliveryman',
+    EntityHeadersTable: ['ID', 'Foto', 'Nome', 'E-mail', 'Ações'],
+    data: deliverymen,
+  };
+
+  useEffect(() => {
+    async function loadDeliveries() {
+      const response = await api.get('delivery');
+
+      setDeliverymen(response.data);
+    }
+
+    loadDeliveries();
+  }, []);
+
+  return <TableUsers entity={entity} />;
 }

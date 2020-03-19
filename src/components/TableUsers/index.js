@@ -18,22 +18,58 @@ export default function TableUsers({ entity }) {
       case 'delivery':
         setDataTable({
           tableHeaders: EntityHeadersTable,
-          tableDatas: data.map(delivery => [
-            delivery.id,
-            delivery.recipient.name,
-            <AvatarTable deliveryman={delivery.deliveryman} />,
-            delivery.recipient.city,
-            delivery.recipient.state,
-            <Status>
-              <span />
-              <strong>Pendente</strong>
-            </Status>,
-          ]),
+          tableDatas: data.map(delivery => (
+            <tr key={delivery.id}>
+              <td>{delivery.id}</td>
+              <td>{delivery.recipient.name}</td>
+              <td>
+                <AvatarTable deliveryman={delivery.deliveryman} />
+              </td>
+              <td>{delivery.recipient.city}</td>
+              <td>{delivery.recipient.state}</td>
+              <td>
+                <Status>
+                  <span />
+                  <strong>Pendente</strong>
+                </Status>
+              </td>
+              <td>
+                <ControlActions />
+              </td>
+            </tr>
+          )),
+        });
+        break;
+      case 'deliveryman':
+        setDataTable({
+          tableHeaders: EntityHeadersTable,
+          tableDatas: data.map(deliveryman => (
+            <tr key={deliveryman.id}>
+              <td>{deliveryman.id}</td>
+              <td>{deliveryman.recipient.name}</td>
+              <td>
+                <AvatarTable deliveryman={delivery.deliveryman} />
+              </td>
+              <td>{delivery.recipient.city}</td>
+              <td>{delivery.recipient.state}</td>
+              <td>
+                <Status>
+                  <span />
+                  <strong>Pendente</strong>
+                </Status>
+              </td>
+              <td>
+                <ControlActions />
+              </td>
+            </tr>
+          )),
         });
         break;
       default:
     }
   }, [entity, setDataTable]);
+
+  console.tron.log(dataTable.tableDatas);
 
   return (
     <Container>
@@ -46,19 +82,7 @@ export default function TableUsers({ entity }) {
             <th>Ações</th>
           </tr>
         </thead>
-        <tbody>
-          {dataTable.tableDatas.map(data => (
-            <tr key={data}>
-              {data.map(field => (
-                <td key={field}>{field}</td>
-              ))}
-
-              <td>
-                <ControlActions />
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        <tbody>{dataTable.tableDatas.map(data => data)}</tbody>
       </UserTable>
     </Container>
   );
