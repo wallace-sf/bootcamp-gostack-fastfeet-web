@@ -1,28 +1,52 @@
 import React, { useState, useEffect } from 'react';
 
 import api from '~/services/api';
-import TableUsers from '~/components/TableUsers';
+import DefaultTable from '~/components/DefaultTable';
+import ControlActions from '~/components/ControlActions';
 
-// import { Container } from './styles';
+import { Avatar } from './styles';
 
 export default function Deliverymen() {
   const [deliverymen, setDeliverymen] = useState([]);
-
-  const entity = {
-    typeEntity: 'deliveryman',
-    EntityHeadersTable: ['ID', 'Foto', 'Nome', 'E-mail', 'Ações'],
-    data: deliverymen,
-  };
+  const [formattedDeliverymen, setformattedDeliverymen] = useState([]);
 
   useEffect(() => {
-    async function loadDeliveries() {
-      const response = await api.get('delivery');
+    async function loadDeliverymen() {
+      const response = await api.get('deliverymen');
 
       setDeliverymen(response.data);
     }
 
-    loadDeliveries();
+    loadDeliverymen();
   }, []);
 
-  return <TableUsers entity={entity} />;
+  useEffect(() => {
+    function renderRows() {
+      return deliverymen.map(deliveryman => (
+        <tr key={deliveryman.id}>
+          <td>#{deliveryman.id}</td>
+          <td>
+            <Avatar>
+              <img
+                src={
+                  (deliveryman.avatar && deliveryman.avatar.url) ||
+                  `https://ui-avatars.com/api/?name=$${deliveryman.name}`
+                }
+                alt={deliveryman.name}
+              />
+            </Avatar>
+          </td>
+          <td>{deliveryman.name}</td>
+          <td>{deliveryman.email}</td>
+          <td>
+            <ControlActions />
+          </td>
+        </tr>
+      ));
+    }
+
+    setformattedDeliverymen(renderRows());
+  }, [deliverymen]);
+
+  return <DefaultTable type="deliveryman" tableRows={formattedDeliverymen} />;
 }

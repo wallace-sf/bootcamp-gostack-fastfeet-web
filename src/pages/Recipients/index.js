@@ -1,7 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-// import { Container } from './styles';
+import api from '~/services/api';
+import DefaultTable from '~/components/DefaultTable';
+import ControlActions from '~/components/ControlActions';
 
 export default function Recipients() {
-  return <h1>Recipients</h1>;
+  const [recipients, setRecipients] = useState([]);
+  const [formattedRecipients, setFormattedRecipients] = useState([]);
+
+  useEffect(() => {
+    async function loadRecipients() {
+      const response = await api.get('recipients');
+
+      setRecipients(response.data);
+    }
+
+    loadRecipients();
+  }, []);
+
+  useEffect(() => {
+    function renderRows() {
+      return recipients.map(recipient => (
+        <tr key={recipient.id}>
+          <td>#{recipient.id}</td>
+          <td>{recipient.name}</td>
+          <td>{recipient.street}</td>
+          <td>
+            <ControlActions />
+          </td>
+        </tr>
+      ));
+    }
+
+    setFormattedRecipients(renderRows());
+  }, [recipients]);
+
+  return <DefaultTable type="recipients" tableRows={formattedRecipients} />;
 }
