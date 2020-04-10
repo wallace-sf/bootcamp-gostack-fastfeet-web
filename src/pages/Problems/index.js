@@ -22,9 +22,8 @@ export default function Problems() {
     function renderRows() {
       return problems.map(problem => (
         <tr key={problem.id}>
-          <td>#{problem.id}</td>
-          <td>{problem.name}</td>
-          <td>{problem.street}</td>
+          <td>#{problem.delivery_id}</td>
+          <td>{problem.description}</td>
           <td>
             <ControlActions />
           </td>

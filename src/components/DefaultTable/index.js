@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { delivery, deliveryman, recipients } from '~/utils/headers';
+import { delivery, deliveryman, recipients, problems } from '~/utils/headers';
 
 import { Container, Content } from './styles';
 
@@ -18,6 +18,9 @@ export default function DefaultTable({ type, tableRows }) {
         break;
       case 'recipients':
         setTableHeaders(recipients);
+        break;
+      case 'problems':
+        setTableHeaders(problems);
         break;
       default:
         setTableHeaders([]);
