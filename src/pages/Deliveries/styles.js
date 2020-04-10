@@ -5,7 +5,20 @@ export const Status = styled.div`
   align-items: center;
   text-transform: uppercase;
   background: #dff0df;
-  color: #2ca42b;
+  color: ${props => {
+    switch (props.status) {
+      case 'pending':
+        return 'Pendente';
+      case 'checkedIn':
+        return 'Retirada';
+      case 'delivered':
+        return 'Entregue';
+      case 'canceled':
+        return 'Cancelada';
+      default:
+        return '#fff';
+    }
+  }};
   padding: 5px 7px;
   border-radius: 12px;
 
@@ -16,7 +29,6 @@ export const Status = styled.div`
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #2ca42b;
   }
 
   strong {

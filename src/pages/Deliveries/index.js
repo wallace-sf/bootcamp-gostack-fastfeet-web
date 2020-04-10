@@ -20,6 +20,21 @@ export default function Deliveries() {
     loadDeliveries();
   }, []);
 
+  function translateStatus(status) {
+    switch (status) {
+      case 'pending':
+        return 'Pendente';
+      case 'checkedIn':
+        return 'Retirada';
+      case 'delivered':
+        return 'Entregue';
+      case 'canceled':
+        return 'Cancelada';
+      default:
+        return status;
+    }
+  }
+
   useEffect(() => {
     function renderRows() {
       return deliveries.map(delivery => (
@@ -42,9 +57,9 @@ export default function Deliveries() {
           <td>{delivery.recipient.city}</td>
           <td>{delivery.recipient.state}</td>
           <td>
-            <Status>
+            <Status status={delivery.status}>
               <span />
-              <strong>Pendente</strong>
+              <strong>{translateStatus(delivery.status)}</strong>
             </Status>
           </td>
           <td>

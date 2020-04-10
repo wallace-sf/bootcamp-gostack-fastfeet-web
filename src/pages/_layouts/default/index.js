@@ -18,4 +18,5 @@ export default function DefaultLayout({ children, pageTitle }) {
 
 DefaultLayout.propTypes = {
   children: PropTypes.element.isRequired,
+  pageTitle: PropTypes.string.isRequired,
 };
