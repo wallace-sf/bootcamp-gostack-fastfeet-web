@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   min-height: 100%;
-  background: #f5f5f5;
+  background: #e8e6e6;
 `;
 
 export const Content = styled.div`
@@ -10,6 +10,8 @@ export const Content = styled.div`
   height: 100%;
   max-width: 1200px;
 `;
+
+export const Main = styled.div``;
 
 export const PageTitle = styled.h1`
   font-size: 24px;

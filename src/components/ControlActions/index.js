@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { FaEllipsisH, FaEye, FaPen, FaTrashAlt } from 'react-icons/fa';
+import OutsideClickHandler from 'react-outside-click-handler';
 
+import {
+  updateModalContentSuccess,
+  toggleModalSuccess,
+} from '~/store/modules/modal/actions';
 import { Container, ActionMenu, ActionItem } from './styles';
 
-export default function ControlActions() {
+export default function ControlActions({ modalContent }) {
   const [visible, setVisible] = useState(false);
+
+  const dispatch = useDispatch();
 
   function handleToggleVisible() {
     setVisible(!visible);
+  }
+
+  function handleModalContent() {
+    handleToggleVisible();
+    dispatch(updateModalContentSuccess(modalContent));
+    dispatch(toggleModalSuccess());
   }
 
   return (
@@ -16,20 +31,26 @@ export default function ControlActions() {
         <FaEllipsisH size={15} color="#C6C6C6" />
       </button>
 
-      <ActionMenu visible={visible}>
-        <ActionItem>
-          <FaEye color="#8E5BE8" size={15} />
-          <span>Visualizar</span>
-        </ActionItem>
-        <ActionItem>
-          <FaPen size={15} color="#4D85EE" />
-          <span>Editar</span>
-        </ActionItem>
-        <ActionItem>
-          <FaTrashAlt size={15} color="#DE3B3B" />
-          <span>Excluir</span>
-        </ActionItem>
-      </ActionMenu>
+      <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
+        <ActionMenu visible={visible}>
+          <ActionItem onClick={handleModalContent}>
+            <FaEye color="#8E5BE8" size={15} />
+            <span>Visualizar</span>
+          </ActionItem>
+          <ActionItem>
+            <FaPen size={15} color="#4D85EE" />
+            <span>Editar</span>
+          </ActionItem>
+          <ActionItem>
+            <FaTrashAlt size={15} color="#DE3B3B" />
+            <span>Excluir</span>
+          </ActionItem>
+        </ActionMenu>
+      </OutsideClickHandler>
     </Container>
   );
 }
+
+ControlActions.propTypes = {
+  modalContent: PropTypes.element.isRequired,
+};

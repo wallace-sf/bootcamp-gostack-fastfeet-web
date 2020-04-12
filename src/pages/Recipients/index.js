@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import api from '~/services/api';
+import ManageTable from '~/components/ManageTable';
 import DefaultTable from '~/components/DefaultTable';
 import ControlActions from '~/components/ControlActions';
 
@@ -35,5 +36,14 @@ export default function Recipients() {
     setFormattedRecipients(renderRows());
   }, [recipients]);
 
-  return <DefaultTable type="recipients" tableRows={formattedRecipients} />;
+  return (
+    <>
+      <ManageTable
+        placeholder="Buscar por destinatários"
+        route="recipients"
+        setData={setRecipients}
+      />
+      <DefaultTable type="recipients" tableRows={formattedRecipients} />;
+    </>
+  );
 }

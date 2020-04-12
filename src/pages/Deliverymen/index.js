@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import api from '~/services/api';
+import ManageTable from '~/components/ManageTable';
 import DefaultTable from '~/components/DefaultTable';
 import ControlActions from '~/components/ControlActions';
 
@@ -48,5 +49,14 @@ export default function Deliverymen() {
     setformattedDeliverymen(renderRows());
   }, [deliverymen]);
 
-  return <DefaultTable type="deliveryman" tableRows={formattedDeliverymen} />;
+  return (
+    <>
+      <ManageTable
+        placeholder="Buscar por entregadores"
+        route="deliverymen"
+        setData={setDeliverymen}
+      />
+      <DefaultTable type="deliveryman" tableRows={formattedDeliverymen} />
+    </>
+  );
 }

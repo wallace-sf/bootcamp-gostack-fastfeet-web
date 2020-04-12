@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Header from '~/components/Header';
-import { Wrapper, Content, PageTitle } from './styles';
+import { Wrapper, Content, PageTitle, Main } from './styles';
 
 export default function DefaultLayout({ children, pageTitle }) {
   return (
@@ -10,7 +10,7 @@ export default function DefaultLayout({ children, pageTitle }) {
       <Header />
       <Content>
         <PageTitle>{pageTitle}</PageTitle>
-        {children}
+        <Main>{children}</Main>
       </Content>
     </Wrapper>
   );
