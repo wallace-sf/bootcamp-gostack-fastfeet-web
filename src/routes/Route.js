@@ -10,6 +10,8 @@ export default function RouteWrapper({
   component: Component,
   isPrivate,
   pageTitle,
+  backRoute,
+  type,
   ...rest
 }) {
   const { signed } = store.getState().auth;
@@ -28,8 +30,13 @@ export default function RouteWrapper({
     <Route
       {...rest}
       render={props => (
-        <Layout pageTitle={pageTitle}>
-          <Component {...props} />
+        <Layout>
+          <Component
+            pageTitle={pageTitle}
+            backRoute={backRoute}
+            type={type}
+            {...props}
+          />
         </Layout>
       )}
     />
@@ -41,9 +48,13 @@ RouteWrapper.propTypes = {
     .isRequired,
   isPrivate: PropTypes.bool,
   pageTitle: PropTypes.string,
+  backRoute: PropTypes.string,
+  type: PropTypes.string,
 };
 
 RouteWrapper.defaultProps = {
   isPrivate: false,
   pageTitle: '',
+  backRoute: '',
+  type: '',
 };

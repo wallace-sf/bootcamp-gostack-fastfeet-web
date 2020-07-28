@@ -29,9 +29,10 @@ export const Content = styled.div`
 
   label span ~ span {
     margin-bottom: 12px;
-    display: inline-block;
+    display: block;
     font-weight: bold;
     color: red;
+    text-align: center;
   }
 
   input {

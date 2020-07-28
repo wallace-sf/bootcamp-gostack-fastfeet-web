@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Header from '~/components/Header';
-import { Wrapper, Content, PageTitle, Main } from './styles';
+import { Wrapper, Content, Main } from './styles';
 
-export default function DefaultLayout({ children, pageTitle }) {
+export default function DefaultLayout({ children }) {
   return (
     <Wrapper>
       <Header />
       <Content>
-        <PageTitle>{pageTitle}</PageTitle>
         <Main>{children}</Main>
       </Content>
     </Wrapper>
@@ -18,5 +17,4 @@ export default function DefaultLayout({ children, pageTitle }) {
 
 DefaultLayout.propTypes = {
   children: PropTypes.element.isRequired,
-  pageTitle: PropTypes.string.isRequired,
 };

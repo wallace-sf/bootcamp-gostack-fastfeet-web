@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import shortId from 'shortid';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
-import api from '~/services/api';
 import ManageTable from '~/components/ManageTable';
 import DefaultTable from '~/components/DefaultTable';
 import ControlActions from '~/components/ControlActions';
+import PageTitle from '~/styles/pageTitle';
 
-export default function Recipients() {
+import api from '~/services/api';
+
+export default function Recipients({ pageTitle }) {
   const [recipients, setRecipients] = useState([]);
   const [formattedRecipients, setFormattedRecipients] = useState([]);
 
   useEffect(() => {
     async function loadRecipients() {
-      const response = await api.get('recipients');
+      try {
+        const response = await api.get('recipients');
 
-      setRecipients(response.data);
+        return setRecipients(response.data);
+      } catch (error) {
+        return toast.error(
+          'Houve um problema para carregar os dados dos destinatários. Tente novamente!'
+        );
+      }
     }
 
     loadRecipients();
@@ -22,7 +33,7 @@ export default function Recipients() {
   useEffect(() => {
     function renderRows() {
       return recipients.map(recipient => (
-        <tr key={recipient.id}>
+        <tr key={shortId()}>
           <td>#{recipient.id}</td>
           <td>{recipient.name}</td>
           <td>{recipient.street}</td>
@@ -38,12 +49,17 @@ export default function Recipients() {
 
   return (
     <>
+      <PageTitle>{pageTitle}</PageTitle>
       <ManageTable
         placeholder="Buscar por destinatários"
         route="recipients"
         setData={setRecipients}
       />
-      <DefaultTable type="recipients" tableRows={formattedRecipients} />;
+      <DefaultTable type="recipients" tableRows={formattedRecipients} />
     </>
   );
 }
+
+Recipients.propTypes = {
+  pageTitle: PropTypes.string.isRequired,
+};

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import shortId from 'shortid';
 
 import { delivery, deliveryman, recipients, problems } from '~/utils/headers';
 
@@ -33,9 +34,9 @@ export default function DefaultTable({ type, tableRows }) {
         <thead>
           <tr>
             {tableHeaders.map(headerText => (
-              <th key={headerText}>{headerText}</th>
+              <th key={shortId()}>{headerText}</th>
             ))}
-            <th>Actions</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>{tableRows}</tbody>

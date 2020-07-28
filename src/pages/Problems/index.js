@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import api from '~/services/api';
 import DefaultTable from '~/components/DefaultTable';
 import ControlActions from '~/components/ControlActions';
 import DefaultModal from '~/components/DefaultModal';
+import PageTitle from '~/styles/pageTitle';
+
+import api from '~/services/api';
 
 import { ModalContent } from './styles';
 
-export default function Problems() {
+export default function Problems({ pageTitle }) {
   const [problems, setProblems] = useState([]);
   const [formattedProblems, setFormattedProblems] = useState([]);
 
@@ -53,8 +56,13 @@ export default function Problems() {
 
   return (
     <>
-      <DefaultTable type="problems" tableRows={formattedProblems} />;
+      <PageTitle>{pageTitle}</PageTitle>
+      <DefaultTable type="problems" tableRows={formattedProblems} />
       {open && <DefaultModal content={content} />}
     </>
   );
 }
+
+Problems.propTypes = {
+  pageTitle: PropTypes.string.isRequired,
+};

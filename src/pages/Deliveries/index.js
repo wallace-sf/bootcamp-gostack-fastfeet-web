@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import shortId from 'shortid';
+import PropTypes from 'prop-types';
 
-import api from '~/services/api';
-import formatDate from '~/utils/formatDate';
 import ManageTable from '~/components/ManageTable';
 import DefaultTable from '~/components/DefaultTable';
 import ControlActions from '~/components/ControlActions';
 import DefaultModal from '~/components/DefaultModal';
+import PageTitle from '~/styles/pageTitle';
 
-import { Status, Avatar, ModalContent, NoImage } from './styles';
+import api from '~/services/api';
+import formatDate from '~/utils/formatDate';
 
-export default function Deliveries() {
+import { Status, ModalContent, NoImage, TableBlock } from './styles';
+import Avatar from '~/styles/Avatar';
+
+export default function Deliveries({ pageTitle }) {
   const [deliveries, setDeliveries] = useState([]);
   const [formattedDeliveries, setformattedDeliveries] = useState([]);
 
@@ -57,10 +62,12 @@ export default function Deliveries() {
         <section>
           <h2>Datas</h2>
           <p>
-            <b>Retirada: </b> {formatDate(delivery.start_date)}
+            <b>Retirada: </b>
+            {delivery.start_date && formatDate(delivery.start_date)}
           </p>
           <p>
-            <b>Entrega: </b> {formatDate(delivery.end_date)}
+            <b>Entrega: </b>
+            {delivery.end_date && formatDate(delivery.end_date)}
           </p>
         </section>
         <section>
@@ -68,12 +75,12 @@ export default function Deliveries() {
           {delivery.signature ? (
             <img src="" alt="" />
           ) : (
-              <NoImage>
-                <p>
-                  <b>Sem assinatura</b>
-                </p>
-              </NoImage>
-            )}
+            <NoImage>
+              <p>
+                <b>Sem assinatura</b>
+              </p>
+            </NoImage>
+          )}
         </section>
       </ModalContent>
     );
@@ -81,36 +88,56 @@ export default function Deliveries() {
 
   useEffect(() => {
     function renderRows() {
-      return deliveries.map(delivery => (
-        <tr key={delivery.id}>
-          <td>#{delivery.id}</td>
-          <td>{delivery.recipient.name}</td>
-          <td>
-            <Avatar>
-              <img
-                src={
-                  (delivery.deliveryman.avatar &&
-                    delivery.deliveryman.avatar.url) ||
-                  `https://ui-avatars.com/api/?name=$${delivery.deliveryman.name}`
-                }
-                alt={delivery.deliveryman.name}
+      return deliveries.map(delivery => {
+        const rowData = {
+          recipient: {
+            value: delivery.recipient_id,
+            label: delivery.recipient.name,
+          },
+          deliveryman: {
+            value: delivery.deliveryman_id,
+            label: delivery.deliveryman.name,
+          },
+          product: delivery.product,
+          id: delivery.id,
+        };
+
+        return (
+          <tr key={shortId()}>
+            <td>#{delivery.id}</td>
+            <td>{delivery.recipient.name}</td>
+            <td>
+              <TableBlock>
+                <Avatar>
+                  <img
+                    src={
+                      (delivery.deliveryman.avatar &&
+                        delivery.deliveryman.avatar.url) ||
+                      `https://ui-avatars.com/api/?name=$${delivery.deliveryman.name}`
+                    }
+                    alt={delivery.deliveryman.name}
+                  />
+                </Avatar>
+                <span>{delivery.deliveryman.name}</span>
+              </TableBlock>
+            </td>
+            <td>{delivery.recipient.city}</td>
+            <td>{delivery.recipient.state}</td>
+            <td>
+              <Status status={delivery.status}>
+                <span />
+                <strong>{translateStatus(delivery.status)}</strong>
+              </Status>
+            </td>
+            <td>
+              <ControlActions
+                modalContent={modalContent(delivery)}
+                rowData={rowData}
               />
-              <span>{delivery.deliveryman.name}</span>
-            </Avatar>
-          </td>
-          <td>{delivery.recipient.city}</td>
-          <td>{delivery.recipient.state}</td>
-          <td>
-            <Status status={delivery.status}>
-              <span />
-              <strong>{translateStatus(delivery.status)}</strong>
-            </Status>
-          </td>
-          <td>
-            <ControlActions modalContent={modalContent(delivery)} />
-          </td>
-        </tr>
-      ));
+            </td>
+          </tr>
+        );
+      });
     }
 
     setformattedDeliveries(renderRows());
@@ -118,6 +145,7 @@ export default function Deliveries() {
 
   return (
     <>
+      <PageTitle>{pageTitle}</PageTitle>
       <ManageTable
         placeholder="Busca por encomendas"
         route="delivery"
@@ -128,3 +156,7 @@ export default function Deliveries() {
     </>
   );
 }
+
+Deliveries.propTypes = {
+  pageTitle: PropTypes.string.isRequired,
+};

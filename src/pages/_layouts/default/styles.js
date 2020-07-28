@@ -12,7 +12,3 @@ export const Content = styled.div`
 `;
 
 export const Main = styled.div``;
-
-export const PageTitle = styled.h1`
-  font-size: 24px;
-`;

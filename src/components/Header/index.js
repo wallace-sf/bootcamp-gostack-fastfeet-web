@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import logo from '~/assets/fastfeet-logo@2x.png';
+
+import { signOut } from '~/store/modules/auth/actions';
+
 import { Container, Content, UserPanel } from './styles';
 
 export default function Header() {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    const { pathname } = window.location;
+    const pathname = `/${window.location.pathname.split('/')[1]}`;
 
     const element = document.querySelector(`a[href='${pathname}']`);
 
@@ -19,6 +25,10 @@ export default function Header() {
     siblings.forEach(s =>
       s === e.target ? s.classList.add('active') : s.classList.remove('active')
     );
+  }
+
+  function handleSignOut() {
+    return dispatch(signOut());
   }
 
   return (
@@ -41,7 +51,9 @@ export default function Header() {
         </nav>
         <UserPanel>
           <strong>User name</strong>
-          <button type="button">sair do sistema</button>
+          <button type="button" onClick={handleSignOut}>
+            sair do sistema
+          </button>
         </UserPanel>
       </Content>
     </Container>

@@ -1,23 +1,42 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { MdSearch, MdAdd } from 'react-icons/md';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 import api from '~/services/api';
 import { Container, InputBox, IconSearch } from './styles';
 
 export default function ManageTable({ placeholder, route, setData }) {
+  const history = useHistory();
+
   const [textInput, setTextInput] = useState('');
 
   function handleInputSearch(e) {
-    setTextInput(e.target.value);
+    return setTextInput(e.target.value);
+  }
+
+  function handleRegister() {
+    switch (route) {
+      case 'delivery':
+        return history.push('/deliveries/register');
+      default:
+        return history.push('/deliverymen/register');
+    }
   }
 
   async function handleFilterTable(e) {
     e.preventDefault();
 
-    const response = await api.get(`${route}/?q=${textInput}`);
+    try {
+      const response = await api.get(`${route}/?q=${textInput}`);
 
-    setData(response.data);
+      return setData(response.data);
+    } catch (error) {
+      return toast.error(
+        'Houve um problema para filtrar a tabela. Tente novamente!'
+      );
+    }
   }
 
   return (
@@ -40,7 +59,7 @@ export default function ManageTable({ placeholder, route, setData }) {
         </form>
       </InputBox>
 
-      <button type="button">
+      <button type="button" onClick={handleRegister}>
         <MdAdd size={22} />
         <b>Cadastrar</b>
       </button>

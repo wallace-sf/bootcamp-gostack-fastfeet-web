@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import shortId from 'shortid';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
-import api from '~/services/api';
 import ManageTable from '~/components/ManageTable';
 import DefaultTable from '~/components/DefaultTable';
 import ControlActions from '~/components/ControlActions';
+import PageTitle from '~/styles/pageTitle';
 
-import { Avatar } from './styles';
+import api from '~/services/api';
 
-export default function Deliverymen() {
+import Avatar from '~/styles/Avatar';
+
+export default function Deliverymen({ pageTitle }) {
   const [deliverymen, setDeliverymen] = useState([]);
   const [formattedDeliverymen, setformattedDeliverymen] = useState([]);
 
   useEffect(() => {
     async function loadDeliverymen() {
-      const response = await api.get('deliverymen');
+      try {
+        const response = await api.get('deliverymen');
 
-      setDeliverymen(response.data);
+        return setDeliverymen(response.data);
+      } catch (error) {
+        return toast.error(
+          'Houve um problema para carregar os dados dos entregadores. Tente novamente!'
+        );
+      }
     }
 
     loadDeliverymen();
@@ -24,7 +35,7 @@ export default function Deliverymen() {
   useEffect(() => {
     function renderRows() {
       return deliverymen.map(deliveryman => (
-        <tr key={deliveryman.id}>
+        <tr key={shortId()}>
           <td>#{deliveryman.id}</td>
           <td>
             <Avatar>
@@ -51,6 +62,7 @@ export default function Deliverymen() {
 
   return (
     <>
+      <PageTitle>{pageTitle}</PageTitle>
       <ManageTable
         placeholder="Buscar por entregadores"
         route="deliverymen"
@@ -60,3 +72,7 @@ export default function Deliverymen() {
     </>
   );
 }
+
+Deliverymen.propTypes = {
+  pageTitle: PropTypes.string.isRequired,
+};

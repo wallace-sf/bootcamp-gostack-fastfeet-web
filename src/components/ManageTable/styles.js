@@ -20,6 +20,11 @@ export const Container = styled.div`
     svg {
       margin-right: 7px;
     }
+
+    &:hover {
+      opacity: 0.7;
+      transition-delay: 100ms;
+    }
   }
 `;
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FaEllipsisH, FaEye, FaPen, FaTrashAlt } from 'react-icons/fa';
 import OutsideClickHandler from 'react-outside-click-handler';
@@ -10,10 +11,11 @@ import {
 } from '~/store/modules/modal/actions';
 import { Container, ActionMenu, ActionItem } from './styles';
 
-export default function ControlActions({ modalContent }) {
-  const [visible, setVisible] = useState(false);
-
+export default function ControlActions({ modalContent, rowData }) {
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [visible, setVisible] = useState(false);
 
   function handleToggleVisible() {
     setVisible(!visible);
@@ -23,6 +25,12 @@ export default function ControlActions({ modalContent }) {
     handleToggleVisible();
     dispatch(updateModalContentSuccess(modalContent));
     dispatch(toggleModalSuccess());
+  }
+
+  function handleEdit() {
+    return history.push('/deliveries/edit', {
+      data: rowData,
+    });
   }
 
   return (
@@ -37,7 +45,7 @@ export default function ControlActions({ modalContent }) {
             <FaEye color="#8E5BE8" size={15} />
             <span>Visualizar</span>
           </ActionItem>
-          <ActionItem>
+          <ActionItem onClick={handleEdit}>
             <FaPen size={15} color="#4D85EE" />
             <span>Editar</span>
           </ActionItem>
@@ -53,4 +61,9 @@ export default function ControlActions({ modalContent }) {
 
 ControlActions.propTypes = {
   modalContent: PropTypes.element.isRequired,
+  rowData: PropTypes.object,
+};
+
+ControlActions.defaultProps = {
+  rowData: {},
 };

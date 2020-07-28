@@ -1,24 +1,47 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { Form, Input } from '@rocketseat/unform';
+import { Form } from '@unform/web';
 import * as Yup from 'yup';
+
+import DefaultInput from '~/components/DefaultInput';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
 import logo from '~/assets/fastfeet-logo.png';
 
-const schema = Yup.object().shape({
-  email: Yup.string()
-    .email('Insira um e-mail válido.')
-    .required('O e-mail é obrigatório.'),
-  password: Yup.string().required('A senha é obrigatória'),
-});
-
 export default function SignIn() {
   const dispatch = useDispatch();
+  const formRef = useRef(null);
 
-  function handleSubmit({ email, password }) {
-    dispatch(signInRequest(email, password));
+  async function handleSubmit(data) {
+    try {
+      formRef.current.setErrors({});
+
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email('Insira um e-mail válido.')
+          .required('O e-mail é obrigatório.'),
+        password: Yup.string().required('A senha é obrigatória'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      return dispatch(signInRequest(data.email, data.password));
+    } catch (err) {
+      const validationErrors = {};
+
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+        });
+
+        return formRef.current.setErrors(validationErrors);
+      }
+
+      return null;
+    }
   }
 
   return (
@@ -26,16 +49,22 @@ export default function SignIn() {
       <header>
         <img src={logo} alt="Fastfeet" />
       </header>
-      <Form onSubmit={handleSubmit} schema={schema}>
+      <Form onSubmit={handleSubmit} ref={formRef}>
         <label htmlFor="email">
           <span>Seu e-mail</span>
-          <Input type="email" name="email" placeholder="Digite seu e-mail" />
+          <DefaultInput
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Digite seu e-mail"
+          />
         </label>
         <label htmlFor="password">
           <span>Sua senha</span>
-          <Input
+          <DefaultInput
             type="password"
             name="password"
+            id="password"
             placeholder="Digite sua senha"
           />
         </label>

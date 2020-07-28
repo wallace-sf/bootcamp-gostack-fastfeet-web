@@ -64,18 +64,6 @@ export const Status = styled.div`
   }
 `;
 
-export const Avatar = styled.div`
-  img {
-    height: 35px;
-    border-radius: 50%;
-    vertical-align: middle;
-  }
-
-  span {
-    margin-left: 5px;
-  }
-`;
-
 export const ModalContent = styled.div`
   width: 100%;
 
@@ -112,5 +100,14 @@ export const NoImage = styled.div`
 
   p {
     text-transform: uppercase;
+  }
+`;
+
+export const TableBlock = styled.div`
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 5px;
   }
 `;
