@@ -11,7 +11,7 @@ import {
 } from '~/store/modules/modal/actions';
 import { Container, ActionMenu, ActionItem } from './styles';
 
-export default function ControlActions({ modalContent, rowData }) {
+export default function ControlActions({ modalContent, rowData, route }) {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -28,7 +28,7 @@ export default function ControlActions({ modalContent, rowData }) {
   }
 
   function handleEdit() {
-    return history.push('/deliveries/edit', {
+    return history.push(route, {
       data: rowData,
     });
   }
@@ -62,8 +62,10 @@ export default function ControlActions({ modalContent, rowData }) {
 ControlActions.propTypes = {
   modalContent: PropTypes.element.isRequired,
   rowData: PropTypes.object,
+  route: PropTypes.string,
 };
 
 ControlActions.defaultProps = {
   rowData: {},
+  route: '',
 };

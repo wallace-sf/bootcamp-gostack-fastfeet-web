@@ -8,7 +8,8 @@ export default styled.div`
   border-radius: 50%;
   overflow: hidden;
 
-  img {
+  img,
+  span {
     position: absolute;
     height: 35px;
     left: 50%;

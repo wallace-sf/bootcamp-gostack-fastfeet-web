@@ -34,27 +34,37 @@ export default function Deliverymen({ pageTitle }) {
 
   useEffect(() => {
     function renderRows() {
-      return deliverymen.map(deliveryman => (
-        <tr key={shortId()}>
-          <td>#{deliveryman.id}</td>
-          <td>
-            <Avatar>
-              <img
-                src={
-                  (deliveryman.avatar && deliveryman.avatar.url) ||
-                  `https://ui-avatars.com/api/?name=$${deliveryman.name}`
-                }
-                alt={deliveryman.name}
-              />
-            </Avatar>
-          </td>
-          <td>{deliveryman.name}</td>
-          <td>{deliveryman.email}</td>
-          <td>
-            <ControlActions />
-          </td>
-        </tr>
-      ));
+      return deliverymen.map(deliveryman => {
+        const rowData = {
+          name: deliveryman.name,
+          email: deliveryman.email,
+          id: deliveryman.id,
+          url: deliveryman.avatar && deliveryman.avatar.url,
+          avatar_id: deliveryman.avatar_id,
+        };
+
+        return (
+          <tr key={shortId()}>
+            <td>#{deliveryman.id}</td>
+            <td>
+              <Avatar>
+                <img
+                  src={
+                    (deliveryman.avatar && deliveryman.avatar.url) ||
+                    `https://ui-avatars.com/api/?name=$${deliveryman.name}`
+                  }
+                  alt={deliveryman.name}
+                />
+              </Avatar>
+            </td>
+            <td>{deliveryman.name}</td>
+            <td>{deliveryman.email}</td>
+            <td>
+              <ControlActions rowData={rowData} route="/deliverymen/edit" />
+            </td>
+          </tr>
+        );
+      });
     }
 
     setformattedDeliverymen(renderRows());

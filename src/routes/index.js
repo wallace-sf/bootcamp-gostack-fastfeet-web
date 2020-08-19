@@ -53,6 +53,14 @@ export default function Routes() {
         type="deliveryman"
       />
       <Route
+        path="/deliverymen/edit"
+        component={DefaultCRUD}
+        isPrivate
+        pageTitle="Edição de entregadores"
+        backRoute="/deliverymen"
+        type="deliveryman_edit"
+      />
+      <Route
         path="/recipients"
         component={Recipients}
         isPrivate

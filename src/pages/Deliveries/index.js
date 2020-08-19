@@ -133,6 +133,7 @@ export default function Deliveries({ pageTitle }) {
               <ControlActions
                 modalContent={modalContent(delivery)}
                 rowData={rowData}
+                route="/deliveries/edit"
               />
             </td>
           </tr>

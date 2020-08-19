@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import DefaultSelect from '~/components/DefaultSelect';
 import DefaultInput from '~/components/DefaultInput';
 import PageTitle from '~/styles/pageTitle';
-import AvatarInput from './AvatInput';
+import AvatarInput from './AvatarInput';
 
 import {
   Container,
@@ -86,9 +86,13 @@ function DefaultCRUD({ pageTitle, backRoute, type }) {
           </>
         );
       case 'deliveryman':
+      case 'deliveryman_edit':
         return (
           <>
-            <AvatarInput />
+            <AvatarInput
+              name="avatar_id"
+              url={location.state && location.state.data.url}
+            />
             <InputBlock>
               <span>Nome</span>
               <DefaultInput
@@ -116,39 +120,101 @@ function DefaultCRUD({ pageTitle, backRoute, type }) {
     try {
       formRef.current.setErrors({});
 
-      // const schema = Yup.object().shape({
-      //   recipient: Yup.string().required(
-      //     'Por favor, selecione um destinatário.'
-      //   ),
-      //   deliveryman: Yup.string().required(
-      //     'Por favor, selecione um entregador.'
-      //   ),
-      //   product: Yup.string()
-      //     .min(5, 'Insira o mínimo de 5 caracteres.')
-      //     .required('Por favor, insira o nome do produto.'),
-      // });
-
-      // await schema.validate(data, {
-      //   abortEarly: false,
-      // });
-
-      console.log(data);
-
       switch (type) {
-        case 'delivery':
-          api.post('/delivery', {
+        case 'delivery': {
+          const schema = Yup.object().shape({
+            recipient: Yup.string().required(
+              'Por favor, selecione um destinatário.'
+            ),
+            deliveryman: Yup.string().required(
+              'Por favor, selecione um entregador.'
+            ),
+            product: Yup.string()
+              .min(5, 'Insira o mínimo de 5 caracteres.')
+              .required('Por favor, insira o nome do produto.'),
+          });
+
+          await schema.validate(data, {
+            abortEarly: false,
+          });
+
+          await api.post('/delivery', {
             product: data.product,
             recipient_id: data.recipient,
             deliveryman_id: data.deliveryman,
           });
+
           return toast.success('Produto cadastrado com sucesso!');
-        case 'delivery_edit':
-          api.put(`/delivery/${location.state.data.id}`, {
+        }
+        case 'delivery_edit': {
+          const schema = Yup.object().shape({
+            recipient: Yup.string().required(
+              'Por favor, selecione um destinatário.'
+            ),
+            deliveryman: Yup.string().required(
+              'Por favor, selecione um entregador.'
+            ),
+            product: Yup.string()
+              .min(5, 'Insira o mínimo de 5 caracteres.')
+              .required('Por favor, insira o nome do produto.'),
+          });
+
+          await schema.validate(data, {
+            abortEarly: false,
+          });
+
+          await api.put(`/delivery/${location.state.data.id}`, {
             product: data.product,
             recipient_id: data.recipient,
             deliveryman_id: data.deliveryman,
           });
+
           return toast.success('Produto editado com sucesso!');
+        }
+        case 'deliveryman': {
+          const schema = Yup.object().shape({
+            name: Yup.string().required(
+              'Por favor, insira um nome para o entregador.'
+            ),
+            email: Yup.string()
+              .email('Insira um e-mail válido.')
+              .required('O e-mail é obrigatório.'),
+          });
+
+          await schema.validate(data, {
+            abortEarly: false,
+          });
+
+          await api.post('/deliverymen', {
+            name: data.name,
+            email: data.email,
+            avatar_id: data.avatar_id,
+          });
+
+          return toast.success('Entregador cadastrado com sucesso!');
+        }
+        case 'deliveryman_edit': {
+          const schema = Yup.object().shape({
+            name: Yup.string().required(
+              'Por favor, insira um nome para o entregador.'
+            ),
+            email: Yup.string()
+              .email('Insira um e-mail válido.')
+              .required('O e-mail é obrigatório.'),
+          });
+
+          await schema.validate(data, {
+            abortEarly: false,
+          });
+
+          await api.put(`/deliverymen/${location.state.data.id}`, {
+            name: data.name,
+            email: data.email,
+            avatar_id: data.avatar_id,
+          });
+
+          return toast.success('Entregador editado com sucesso!');
+        }
         default:
           return null;
       }
